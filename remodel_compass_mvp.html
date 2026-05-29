@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Remodel Compass MVP</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f6f4ee;
+      color: #222;
+      margin: 0;
+      padding: 0;
+      line-height: 1.45;
+    }
+    header {
+      background: #1f3b4d;
+      color: white;
+      padding: 28px 18px;
+      text-align: center;
+    }
+    header h1 { margin: 0; font-size: 2rem; }
+    header p { margin: 8px auto 0; max-width: 720px; font-size: 1.05rem; }
+    main {
+      max-width: 850px;
+      margin: 24px auto;
+      background: white;
+      padding: 22px;
+      border-radius: 14px;
+      box-shadow: 0 3px 18px rgba(0,0,0,.08);
+    }
+    h2 { color: #1f3b4d; }
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 18px;
+    }
+    select, input, textarea {
+      width: 100%;
+      padding: 11px;
+      margin-top: 6px;
+      border: 1px solid #bbb;
+      border-radius: 8px;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+    textarea { min-height: 90px; }
+    button {
+      background: #1f3b4d;
+      color: white;
+      border: none;
+      padding: 13px 18px;
+      font-size: 1rem;
+      border-radius: 9px;
+      margin-top: 24px;
+      cursor: pointer;
+    }
+    button:hover { background: #162b38; }
+    .result {
+      margin-top: 26px;
+      padding: 18px;
+      background: #fbfaf5;
+      border-left: 6px solid #1f3b4d;
+      border-radius: 8px;
+    }
+    .risk-high { border-left-color: #b00020; }
+    .risk-moderate { border-left-color: #d98200; }
+    .risk-low { border-left-color: #2e7d32; }
+    .pill {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-weight: bold;
+      margin: 6px 0 12px;
+    }
+    .high { background: #ffd9df; color: #8a0016; }
+    .moderate { background: #ffe7c2; color: #8a4b00; }
+    .low { background: #dff3df; color: #1b5e20; }
+    ul { padding-left: 22px; }
+    .small {
+      font-size: .9rem;
+      color: #555;
+      margin-top: 16px;
+    }
+    footer {
+      max-width: 850px;
+      margin: 18px auto 40px;
+      color: #666;
+      font-size: .9rem;
+      padding: 0 18px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Remodel Compass</h1>
+  <p><strong>Protect Yourself Before You Sign.</strong><br>
+  Smart homeowners use Remodel Compass to spot hidden risks, avoid costly mistakes, and prevent renovation nightmares before they start.</p>
+</header>
+
+<main>
+  <h2>Review My Remodel Bid</h2>
+  <p>Answer a few questions. Remodel Compass will flag possible risk areas and suggest your next right moves.</p>
+
+  <form id="reviewForm">
+    <label>Project type</label>
+    <select id="projectType">
+      <option>Bathroom remodel</option>
+      <option>Kitchen remodel</option>
+      <option>Roofing</option>
+      <option>Pool</option>
+      <option>Painting</option>
+      <option>Flooring</option>
+      <option>Electrical</option>
+      <option>Plumbing</option>
+      <option>Whole home remodel</option>
+      <option>Other</option>
+    </select>
+
+    <label>Do you have a written bid or estimate?</label>
+    <select id="writtenBid">
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+      <option value="partial">Partial / informal</option>
+    </select>
+
+    <label>How much deposit is requested?</label>
+    <select id="deposit">
+      <option value="low">0–10%</option>
+      <option value="fair">10–25%</option>
+      <option value="caution">25–50%</option>
+      <option value="high">More than 50%</option>
+      <option value="unknown">I’m not sure</option>
+    </select>
+
+    <label>Are specific materials listed?</label>
+    <select id="materials">
+      <option value="clear">Yes, brand/model/color/finish are clear</option>
+      <option value="partial">Some details are listed</option>
+      <option value="vague">No, materials are vague</option>
+      <option value="unknown">I’m not sure</option>
+    </select>
+
+    <label>Are payment milestones clearly defined?</label>
+    <select id="milestones">
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+      <option value="unknown">I’m not sure</option>
+    </select>
+
+    <label>Is the completion timeline clear?</label>
+    <select id="timeline">
+      <option value="clear">Yes</option>
+      <option value="vague">Vague</option>
+      <option value="none">No timeline stated</option>
+      <option value="unrealistic">Seems unrealistic</option>
+    </select>
+
+    <label>Does the bid mention liability insurance?</label>
+    <select id="insurance">
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+      <option value="unknown">I’m not sure</option>
+    </select>
+
+    <label>Does the bid explain warranties?</label>
+    <select id="warranty">
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+      <option value="unknown">I’m not sure</option>
+    </select>
+
+    <label>Does the bid explain change orders?</label>
+    <select id="changeOrders">
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+      <option value="unknown">I’m not sure</option>
+    </select>
+
+    <label>Will workers have access to your home or valuables?</label>
+    <select id="siteSecurity">
+      <option value="limited">Limited access / valuables secured</option>
+      <option value="open">Open access / valuables present</option>
+      <option value="unknown">I’m not sure</option>
+    </select>
+
+    <label>Paste any wording from the bid that concerns you</label>
+    <textarea id="notes" placeholder='Example: “as needed,” “standard materials,” “don’t worry,” “it’s always done this way”'></textarea>
+
+    <button type="button" onclick="generateReview()">Generate Remodel Compass Review</button>
+  </form>
+
+  <div id="result"></div>
+</main>
+
+<footer>
+  Remodel Compass provides educational guidance only. It is not legal advice, contractor endorsement, engineering advice, or a guarantee of project outcome.
+</footer>
+
+<script>
+function addRisk(list, points, severity, title, message, nextMove) {
+  list.push({ points, severity, title, message, nextMove });
+}
+
+function generateReview() {
+  const risks = [];
+  const writtenBid = document.getElementById('writtenBid').value;
+  const deposit = document.getElementById('deposit').value;
+  const materials = document.getElementById('materials').value;
+  const milestones = document.getElementById('milestones').value;
+  const timeline = document.getElementById('timeline').value;
+  const insurance = document.getElementById('insurance').value;
+  const warranty = document.getElementById('warranty').value;
+  const changeOrders = document.getElementById('changeOrders').value;
+  const siteSecurity = document.getElementById('siteSecurity').value;
+  const notes = document.getElementById('notes').value.toLowerCase();
+
+  if (writtenBid === "no") {
+    addRisk(risks, 25, "high", "No written bid", "Verbal agreements often lead to misunderstandings, missing details, and disputes.", "Request a written scope before proceeding.");
+  } else if (writtenBid === "partial") {
+    addRisk(risks, 15, "moderate", "Informal or incomplete bid", "Partial documentation can leave important expectations undefined.", "Ask for a complete written estimate with scope, materials, timeline, and payment terms.");
+  }
+
+  if (deposit === "high") {
+    addRisk(risks, 25, "high", "Large upfront payment", "More than 50% upfront can leave the homeowner with little leverage if work slows or quality problems appear.", "Ask what the deposit covers and request supplier receipts for materials.");
+  } else if (deposit === "caution") {
+    addRisk(risks, 12, "moderate", "Deposit deserves review", "A larger deposit may be reasonable in some cases, but it should be tied to real labor, ordered materials, or clear milestones.", "Clarify what the deposit pays for before signing.");
+  } else if (deposit === "unknown") {
+    addRisk(risks, 8, "moderate", "Deposit unclear", "Unclear payment expectations often create stress later.", "Get the payment schedule in writing.");
+  }
+
+  if (materials === "vague") {
+    addRisk(risks, 20, "high", "Materials are vague", "Undefined materials can lead to substitutions, disappointment, or surprise costs.", "Request specific brands, models, colors, finishes, and quantities.");
+  } else if (materials === "partial" || materials === "unknown") {
+    addRisk(risks, 12, "moderate", "Material details incomplete", "Some important choices may still be assumed rather than agreed.", "Create a material and finish schedule before work begins.");
+  }
+
+  if (milestones === "no") {
+    addRisk(risks, 20, "high", "No payment milestones", "The bid does not clearly explain what work must be completed before additional payments are due.", "Tie payments to completed, visible milestones.");
+  } else if (milestones === "unknown") {
+    addRisk(risks, 10, "moderate", "Milestones unclear", "Unclear milestones can lead to paying too much too soon.", "Ask for a milestone payment schedule.");
+  }
+
+  if (timeline === "none" || timeline === "unrealistic") {
+    addRisk(risks, 16, "high", "Timeline risk", "Missing or unrealistic timelines are common sources of stress and project conflict.", "Ask for start date, expected completion date, and what could delay the work.");
+  } else if (timeline === "vague") {
+    addRisk(risks, 10, "moderate", "Timeline vague", "Vague timing makes it difficult to hold anyone accountable.", "Request a simple written schedule.");
+  }
+
+  if (insurance === "no" || insurance === "unknown") {
+    addRisk(risks, 22, "high", "Insurance not verified", "Lack of liability insurance can expose the homeowner to serious financial risk.", "Request current proof of liability insurance before work begins.");
+  }
+
+  if (warranty === "no" || warranty === "unknown") {
+    addRisk(risks, 10, "moderate", "Warranty unclear", "If warranty terms are not written, repair responsibility may become unclear after problems appear.", "Ask for written labor and material warranty terms.");
+  }
+
+  if (changeOrders === "no" || changeOrders === "unknown") {
+    addRisk(risks, 12, "moderate", "Change-order process missing", "Unexpected changes can become expensive when approval and pricing are not defined in advance.", "Require written approval before extra work or added costs.");
+  }
+
+  if (siteSecurity === "open" || siteSecurity === "unknown") {
+    addRisk(risks, 10, "moderate", "Site security exposure", "Construction work increases access to your home, materials, tools, and valuables.", "Secure valuables, control keys/codes, and clarify who is responsible for access.");
+  }
+
+  const triggerPhrases = [
+    "as needed", "standard materials", "to be determined", "allowance",
+    "don’t worry", "don't worry", "always done this way", "yes i know",
+    "trust me", "approx", "approximately"
+  ];
+  const found = triggerPhrases.filter(p => notes.includes(p));
+  if (found.length > 0) {
+    addRisk(risks, 12, "moderate", "Concerning wording detected", "Some wording may indicate assumptions, vague details, or promises that should be clarified.", "Ask for the unclear wording to be rewritten in specific, measurable terms.");
+  }
+
+  const total = risks.reduce((sum, r) => sum + r.points, 0);
+  let level = "LOW";
+  let cls = "risk-low";
+  let pill = "low";
+  if (total >= 70) { level = "HIGH"; cls = "risk-high"; pill = "high"; }
+  else if (total >= 30) { level = "MODERATE"; cls = "risk-moderate"; pill = "moderate"; }
+
+  const high = risks.filter(r => r.severity === "high");
+  const moderate = risks.filter(r => r.severity === "moderate");
+
+  let html = `<div class="result ${cls}">
+    <h2>Remodel Compass Review</h2>
+    <div class="pill ${pill}">${level} RISK</div>
+    <p><strong>Score:</strong> ${total}</p>`;
+
+  if (risks.length === 0) {
+    html += `<p>No major risk flags were detected from these answers. Still, review all written details before signing.</p>`;
+  } else {
+    if (high.length) {
+      html += `<h3>High-Risk Items</h3><ul>`;
+      high.forEach(r => html += `<li><strong>${r.title}:</strong> ${r.message}<br><em>Next move:</em> ${r.nextMove}</li>`);
+      html += `</ul>`;
+    }
+    if (moderate.length) {
+      html += `<h3>Moderate-Risk Items</h3><ul>`;
+      moderate.forEach(r => html += `<li><strong>${r.title}:</strong> ${r.message}<br><em>Next move:</em> ${r.nextMove}</li>`);
+      html += `</ul>`;
+    }
+  }
+
+  html += `<h3>Suggested Questions To Ask Before Signing</h3>
+    <ul>
+      <li>What exactly is included and excluded?</li>
+      <li>Which specific materials, brands, colors, and finishes are included?</li>
+      <li>What work must be completed before each payment is due?</li>
+      <li>How are changes priced and approved?</li>
+      <li>Who is responsible for permits, inspections, cleanup, and warranty work?</li>
+      <li>Who will be onsite, and who controls access to the property?</li>
+    </ul>
+    <p class="small"><strong>Reminder:</strong> This review is educational guidance only. For legal, engineering, or code questions, consult a qualified local professional.</p>
+  </div>`;
+
+  document.getElementById('result').innerHTML = html;
+  document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
